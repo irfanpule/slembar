@@ -33,6 +33,15 @@ class PaymentController
         \Midtrans\Config::$overrideNotifUrl = SWB . "index.php?p=denda&status_fine=notification";
     }
     
+    private function getMenu(){
+        $actions = '<div class="memberFineAction">';
+        $actions .= '<a href="index.php?p=denda&status_fine=unpaid" class="btn btn-link">' . __('Unpaid') . '</a> ';
+        $actions .= '<a href="index.php?p=denda&status_fine=paid" class="btn btn-link ">' . __('Paid') . '</a> ';
+        $actions .= '<a href="index.php?p=denda&status_fine=transaction" class="btn btn-link ">' . __('Transaction') . '</a> ';
+        $actions .= '</div>';
+        return $actions;
+    }
+
     private function getFineData() {
         $sql = "SELECT * from fines WHERE member_id='{$this->memberID}' AND (debet!=credit)";
         $query = $this->db->query($sql);
@@ -67,10 +76,7 @@ class PaymentController
 
         // put the result into variables
         $datagrid_result = $datagrid->createDataGrid($this->db, $table_spec, $num_recs_show);
-        $actions = '<div class="memberFineAction">';
-        $actions .= '<a href="index.php?p=denda&status_fine=unpaid" class="btn btn-link">' . __('Unpaid') . '</a> ';
-        $actions .= '<a href="index.php?p=denda&status_fine=paid" class="btn btn-link ">' . __('Paid') . '</a> ';
-        $actions .= '</div>';
+        $actions = $this->getMenu();
         $result .= '<div class="memberFineInfo">' . $datagrid->num_rows . ' ' . __('fine(s) paid') . $actions . '</div>' . "\n" . $datagrid_result;
         return $result;
     }
@@ -100,10 +106,7 @@ class PaymentController
 
         // put the result into variables
         $datagrid_result = $datagrid->createDataGrid($this->db, $table_spec, $num_recs_show);
-        $actions = '<div class="memberFineAction">';
-        $actions .= '<a href="'. SWB .'index.php?p=denda&status_fine=unpaid" class="btn btn-link">' . __('Unpaid') . '</a> ';
-        $actions .= '<a href="'. SWB .'index.php?p=denda&status_fine=paid" class="btn btn-link ">' . __('Paid') . '</a> ';
-        $actions .= '</div>';
+        $actions = $this->getMenu();
         $table_view .= '<div class="memberFineInfo">' . $datagrid->num_rows . ' ' . __('fine(s) unpaid') . $actions . '</div>' . "\n" . $datagrid_result;
         return $table_view;
     }
@@ -205,5 +208,10 @@ class PaymentController
             </script>
         HTML;
         return $table_view . $jsScript;
+    }
+
+    public function showTransactionList() {
+        $actions = $this->getMenu();
+        return $actions."no data";
     }
 }

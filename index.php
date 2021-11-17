@@ -42,6 +42,8 @@ if ($_GET['status_fine'] == 'paid') {
     echo $payment->showFinesPaid();
 } elseif ($_GET['status_fine'] == 'paymentConfirm') {
     echo $payment->paymentConfirm();
+} elseif ($_GET['status_fine'] == 'transaction') {
+    echo $payment->showTransactionList();  
 } else {
     echo $payment->showFinesUnpaid();
 }
