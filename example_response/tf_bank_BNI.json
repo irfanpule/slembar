@@ -1,0 +1,19 @@
+{
+    "status_code": "201",
+    "status_message": "Transaksi sedang diproses",
+    "transaction_id": "9aea7c13-97a9-4ae4-92c9-d20edc879dcb",
+    "order_id": "1661209915",
+    "gross_amount": "63000.00",
+    "payment_type": "bank_transfer",
+    "transaction_time": "2021-11-17 11:24:37",
+    "transaction_status": "pending",
+    "va_numbers": [
+        {
+        "bank": "bni",
+        "va_number": "9889460597905326"
+        }
+    ],
+    "fraud_status": "accept",
+    "pdf_url": "https://app.sandbox.midtrans.com/snap/v1/transactions/4344431d-ca0a-4dc9-884a-445d55eb212e/pdf",
+    "finish_redirect_url": "https://tesbayar.btech.id/redirect-payment?order_id=1661209915&status_code=201&transaction_status=pending"
+}

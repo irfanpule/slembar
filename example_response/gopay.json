@@ -1,0 +1,14 @@
+
+{
+    "status_code": "201",
+    "status_message": "Success, transaction is found",
+    "transaction_id": "fb9e1977-db12-4365-a40e-23e769dece17",
+    "order_id": "19274456",
+    "gross_amount": "63000.00",
+    "payment_type": "gopay",
+    "transaction_time": "2021-11-17 11:10:00",
+    "transaction_status": "pending",
+    "fraud_status": "accept",
+    "finish_redirect_url": "https://tesbayar.btech.id/redirect-payment?order_id=19274456&status_code=201&transaction_status=pending"
+}
+  

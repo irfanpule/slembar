@@ -1,0 +1,20 @@
+{
+    "status_code": "201",
+    "status_message": "Transaksi sedang diproses",
+    "transaction_id": "56ce19be-1c52-4fea-b92b-e282e3290915",
+    "order_id": "2091774808",
+    "gross_amount": "63000.00",
+    "payment_type": "bank_transfer",
+    "transaction_time": "2021-11-17 11:27:38",
+    "transaction_status": "pending",
+    "va_numbers": [
+      {
+        "bank": "bca",
+        "va_number": "891494605564262"
+      }
+    ],
+    "fraud_status": "accept",
+    "bca_va_number": "891494605564262",
+    "pdf_url": "https://app.sandbox.midtrans.com/snap/v1/transactions/e85317c3-471d-4946-ae91-ebdac92e16d2/pdf",
+    "finish_redirect_url": "https://tesbayar.btech.id/redirect-payment?order_id=2091774808&status_code=201&transaction_status=pending"
+  }
