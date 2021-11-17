@@ -117,15 +117,14 @@ class PaymentController
     
     public function paymentConfirm() 
     {
-        $table_view = baseFinesUnpaid();
+        $table_view = $this->baseFinesUnpaid();
         $query = $this->getFineData();
 
         // collect all fines
         $items = array();
         while ($data = $query->fetch_assoc()) {
-            echo $data['debet'];
             $item = array(
-                'id' => $data['fine_id'],
+                'id' => $data['fines_id'],
                 'price' => $data['debet'],
                 'quantity' => 1,
                 'name' => $data['description']
