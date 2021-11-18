@@ -1,0 +1,19 @@
+{
+    "status_code": "201",
+    "status_message": "Transaksi sedang diproses",
+    "transaction_id": "c6598103-566a-46b1-a7f1-73c4f2a9ef18",
+    "order_id": "1675568850",
+    "gross_amount": "18000.00",
+    "payment_type": "bank_transfer",
+    "transaction_time": "2021-11-18 16:26:32",
+    "transaction_status": "pending",
+    "va_numbers": [
+      {
+        "bank": "bri",
+        "va_number": "874590834350488300"
+      }
+    ],
+    "fraud_status": "accept",
+    "pdf_url": "https://app.sandbox.midtrans.com/snap/v1/transactions/79feeb67-0088-4edb-844c-d3fdc9c02298/pdf",
+    "finish_redirect_url": "http://example.com?order_id=1675568850&status_code=201&transaction_status=pending"
+  }
