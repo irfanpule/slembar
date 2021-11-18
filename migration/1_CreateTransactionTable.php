@@ -21,6 +21,8 @@ class CreateTransactionTable extends \SLiMS\Migration\Migration
             `gross_amount` varchar(255) COLLATE 'utf8mb4_unicode_ci',
             `fraud_status` varchar(255) COLLATE 'utf8mb4_unicode_ci',
             `pdf_url` varchar(255) COLLATE 'utf8mb4_unicode_ci'
+            `va_number` varchar(255) COLLATE 'utf8mb4_unicode_ci',
+            `bank` varchar(255) COLLATE 'utf8mb4_unicode_ci'
           ) ENGINE='MyISAM' COLLATE 'utf8mb4_unicode_ci';");
     }
 
