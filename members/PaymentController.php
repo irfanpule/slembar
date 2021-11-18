@@ -254,7 +254,14 @@ class PaymentController
         $query = $this->db->query("SELECT * FROM payment_transactions WHERE transaction_id='{$trxId}'");
         $data = $query->fetch_object();
         $actions = $this->getMenu();
+        if ($data->pdf_url) {
+            $link = '<a href="'.$data->pdf_url.'" target="_blank">link</a>';
+        } else {
+            $link = "";
+        }
+
         $view = <<<HTML
+        
         $actions
         <div class="bg-white border-right border-bottom border-left p-4">
             <div class="tagline"><div class="memberInfoHead">Transaction Detail</div>
@@ -271,7 +278,7 @@ class PaymentController
                 </tr>
                 <tr>
                     <td class="key alterCell" width="15%"><strong>Payment Type</strong></td><td class="value alterCell2" width="30%">$data->payment_type</td>
-                    <td class="key alterCell" width="15%"><strong>Instruction</strong></td><td class="value alterCell2" width="30%"><a href="$data->pdf_url" target="_blank">link</a></td>
+                    <td class="key alterCell" width="15%"><strong>Instruction</strong></td><td class="value alterCell2" width="30%">$link</td>
                 </tr>
                 <tr>
                     <td class="key alterCell" width="15%"><strong>Bank</strong></td><td class="value alterCell2" >$data->bank</td>
