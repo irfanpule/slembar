@@ -210,8 +210,32 @@ class PaymentController
         return $table_view . $jsScript;
     }
 
-    public function showTransactionList() {
+    public function showTransactionList($num_recs_show = 20) {
+
+        // table spec
+        $table_spec = 'payment_transactions AS t';
+
+        // create datagrid
+        $datagrid = new simbio_datagrid();
+        $datagrid->setSQLColumn('t.transaction_id AS \'' . __('Id') . '\'',
+            't.transaction_time AS \''.__('Time').'\'',
+            't.transaction_status AS \''.__('Status').'\'',
+            't.order_id AS \''.__('Order Id').'\'',
+            't.payment_type AS \''.__('Payment Type').'\'',
+            't.bank AS \''.__('Bank').'\'',
+            't.gross_amount AS \''.__('Gross Amount').'\'');
+        $criteria = 't.member_id=\''.$this->db->escape_string($this->memberID).'\' ';     
+        $datagrid->setSQLCriteria($criteria);
+        
+        // set table and table header attributes
+        $datagrid->table_attr = 'align="center" class="table table-striped" cellpadding="5" cellspacing="0"';
+        $datagrid->table_header_attr = 'class="dataListHeader" style="font-weight: bold;"';
+        $datagrid->using_AJAX = false;
+
+        // put the result into variables
+        $datagrid_result = $datagrid->createDataGrid($this->db, $table_spec, $num_recs_show);
         $actions = $this->getMenu();
-        return $actions."no data";
+        $result .= '<div class="memberTransaction">' . $datagrid->num_rows . ' ' . __('transaction(s) data') . $actions . '</div>' . "\n" . $datagrid_result;
+        return $result;
     }
 }
