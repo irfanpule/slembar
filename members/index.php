@@ -28,10 +28,6 @@ if (!$is_member_login) {
     header('Location: index.php?p=member');
 }
 
-require SIMBIO . 'simbio_GUI/table/simbio_table.inc.php';
-require SIMBIO . 'simbio_DB/datagrid/simbio_dbgrid.inc.php';
-require SIMBIO . 'simbio_GUI/paging/simbio_paging.inc.php';
-require SIMBIO . 'simbio_UTILS/simbio_date.inc.php';
 require __DIR__ . '/PaymentController.php';
 
 $payment = new PaymentController($sysconf, $dbs, trim($_SESSION['mid']));
