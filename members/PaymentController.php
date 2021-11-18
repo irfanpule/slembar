@@ -230,6 +230,14 @@ class PaymentController
         $criteria = 't.member_id=\''.$this->db->escape_string($this->memberID).'\' ';     
         $datagrid->setSQLCriteria($criteria);
         
+        $datagrid->modifyColumnContent(0, 'callback{detailPage}');
+        function detailPage($obj_db, $rec_d)
+        {
+            $transaction_id = $rec_d[0];
+            return '<a href="index.php?p=denda&status_fine=trxDetail&trxId='.$transaction_id.'"> '.$transaction_id.' </a>';
+
+        }
+
         // set table and table header attributes
         $datagrid->table_attr = 'align="center" class="table table-striped" cellpadding="5" cellspacing="0"';
         $datagrid->table_header_attr = 'class="dataListHeader" style="font-weight: bold;"';
@@ -240,5 +248,43 @@ class PaymentController
         $actions = $this->getMenu();
         $result .= '<div class="memberTransaction">' . $datagrid->num_rows . ' ' . __('transaction(s) data') . $actions . '</div>' . "\n" . $datagrid_result;
         return $result;
+    }
+
+    public function showTranscationDetail($trxId) {
+        $query = $this->db->query("SELECT * FROM payment_transactions WHERE transaction_id='{$trxId}'");
+        $data = $query->fetch_object();
+        $actions = $this->getMenu();
+        $view = <<<HTML
+        $actions
+        <div class="bg-white border-right border-bottom border-left p-4">
+            <div class="tagline"><div class="memberInfoHead">Transaction Detail</div>
+        </div>
+        <table class="memberDetail table table-striped" cellspacing="0" cellpadding="5">
+            <tbody>
+                <tr>
+                    <td class="key alterCell" width="15%"><strong>Transaction Id</strong></td><td class="value alterCell2" width="30%">$data->transaction_id</td>
+                    <td class="key alterCell" width="15%"><strong>Transaction Status</strong></td><td class="value alterCell2" width="30%">$data->transaction_status</td>
+                </tr>
+                <tr>
+                    <td class="key alterCell" width="15%"><strong>Order Id</strong></td><td class="value alterCell2" width="30%">$data->order_id</td>
+                    <td class="key alterCell" width="15%"><strong>Transaction Time</strong></td><td class="value alterCell2" width="30%">$data->transaction_time</td>
+                </tr>
+                <tr>
+                    <td class="key alterCell" width="15%"><strong>Payment Type</strong></td><td class="value alterCell2" width="30%">$data->payment_type</td>
+                    <td class="key alterCell" width="15%"><strong>Instruction</strong></td><td class="value alterCell2" width="30%"><a href="$data->pdf_url" target="_blank">link</a></td>
+                </tr>
+                <tr>
+                    <td class="key alterCell" width="15%"><strong>Bank</strong></td><td class="value alterCell2" >$data->bank</td>
+                    <td class="key alterCell" width="15%"><strong>VA Number</strong></td><td class="value alterCell2">$data->va_number</td>
+                </tr>
+                <tr>
+                    <td class="key alterCell" width="15%"><strong>Groos Amount</strong></td><td class="value alterCell2" colspan="3">Rp.    $data->gross_amount</td>
+                </tr>
+            </tbody>
+        </table>
+        HTML;
+
+
+        return $view;
     }
 }

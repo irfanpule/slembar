@@ -38,6 +38,8 @@ if ($_GET['status_fine'] == 'paid') {
     echo $payment->paymentConfirm();
 } elseif ($_GET['status_fine'] == 'transaction') {
     echo $payment->showTransactionList();  
+} elseif ($_GET['status_fine'] == 'trxDetail' && isset($_GET['trxId'])) {
+    echo $payment->showTranscationDetail($_GET['trxId']);  
 } else {
     echo $payment->showFinesUnpaid();
 }
