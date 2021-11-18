@@ -56,14 +56,27 @@ $table_spec = 'payment_transactions AS t';
 
 // create datagrid
 $datagrid = new simbio_datagrid();
-$datagrid->setSQLColumn('t.transaction_id AS \'' . __('Id') . '\'',
+$datagrid->setSQLColumn('t.transaction_id AS \'' . __('Transaction Id') . '\'',
     't.transaction_time AS \''.__('Time').'\'',
     't.member_id AS \''.__('Member Id').'\'',
     't.transaction_status AS \''.__('Status').'\'',
     't.order_id AS \''.__('Order Id').'\'',
     't.payment_type AS \''.__('Payment Type').'\'',
     't.bank AS \''.__('Bank').'\'',
+    't.va_number AS \''.__('VA Number').'\'',
+    't.pdf_url AS \''.__('PDF').'\'',
     't.gross_amount AS \''.__('Gross Amount').'\'');
+
+$datagrid->modifyColumnContent(8, 'callback{pdfLink}');
+function pdfLink($obj_db, $rec_d)
+{
+    $pdf_url = $rec_d[8];
+    if ($pdf_url != '') {
+        return '<a href="'.$pdf_url.'" target="_blank"> Instruksi </a>';
+    } else {
+        return "";
+    }
+}
 
 if (isset($_GET['keywords']) AND $_GET['keywords']) {
     $keywords = $dbs->escape_string($_GET['keywords']);
