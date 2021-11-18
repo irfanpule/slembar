@@ -14,7 +14,5 @@
 $plugin = \SLiMS\Plugins::getInstance();
 
 // register plugins
-$plugin->registerMenu('opac', 'Denda', __DIR__ . '/index.php', 'Fines');
-
-
-// require 'routers.php';
+$plugin->registerMenu('opac', 'Denda', __DIR__ . '/members/index.php', 'Halaman denda member');
+$plugin->registerMenu('system', 'Midtrans Config', __DIR__ . '/admins/index.php', 'Halaman untuk mengubah konfigurasi Midtrans');

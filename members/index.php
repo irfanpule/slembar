@@ -2,7 +2,6 @@
 /**
  * @Created by          : Muhammad Irfan (irfan.pule2@gmail.com)
  * @Date                : 17/11/2021 14:44
- * @File name           : overdue_dines.php
  * 
  * */
 
@@ -33,10 +32,9 @@ require SIMBIO . 'simbio_GUI/table/simbio_table.inc.php';
 require SIMBIO . 'simbio_DB/datagrid/simbio_dbgrid.inc.php';
 require SIMBIO . 'simbio_GUI/paging/simbio_paging.inc.php';
 require SIMBIO . 'simbio_UTILS/simbio_date.inc.php';
-require 'config.php';
-require 'PaymentController.php';
+require __DIR__ . '/PaymentController.php';
 
-$payment = new PaymentController($paymentconf, $dbs, trim($_SESSION['mid']));
+$payment = new PaymentController($sysconf, $dbs, trim($_SESSION['mid']));
 
 if ($_GET['status_fine'] == 'paid') {
     echo $payment->showFinesPaid();

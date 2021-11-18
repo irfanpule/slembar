@@ -5,7 +5,7 @@
  * @File name           : PaymentController.php
  */
 
-require_once 'midtrans-php-master/Midtrans.php';
+require_once 'plugins/payments/midtrans-php-master/Midtrans.php';
 
 
 class PaymentController
@@ -25,11 +25,11 @@ class PaymentController
          * Midtrans documentation to get snap token 
          * https://docs.midtrans.com/en/snap/integration-guide?id=_1-acquiring-transaction-token-on-backend
          * */ 
-
+        
         // Set your Merchant Server Key. Get value from sysconf
         \Midtrans\Config::$serverKey = $this->paymentconf['midtrans_server_key'];
         // // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
-        \Midtrans\Config::$isProduction = $this->paymentconf['midtrans_is_production'];
+        \Midtrans\Config::$isProduction = $this->paymentconf['midtrans_is_production']?true:false;
         \Midtrans\Config::$overrideNotifUrl = SWB . "index.php?p=denda&status_fine=notification";
     }
     
@@ -137,7 +137,7 @@ class PaymentController
         // add admin fee
         $item = array(
             'id' => 'adm'.rand(),
-            'price' => $this->paymentconf['admin_fee'],
+            'price' => $this->paymentconf['payment_admin_fee'],
             'quantity' => 1,
             'name' => "Admin Fee"
         );
