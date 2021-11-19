@@ -50,12 +50,73 @@ class NotificationHandlerController extends Controller {
         parent::withJson($return);
     }
 
+    public function listenNotification() {
+        $content = trim(file_get_contents("php://input"));
+        $decoded = json_decode($content, true);
+
+        $transaction_status = $decoded['transaction_status'];
+        $transaction_id = $decoded['transaction_id'];
+        $order_id = $decoded['order_id'];
+        $type = $decoded['payment_type'];
+
+        $query_select = $this->db->query("SELECT transaction_id FROM payment_transactions WHERE transaction_id='$transaction_id'");
+        if ($this->db->error) {
+            $return = array(
+                "status" => 'error',
+                "message" => "select: ".$this->db->error
+            );
+            parent::withJson($return);
+            exit();
+        } 
+
+        if ($query_select->num_rows > 0) {
+            // update status transaksi
+            $this->db->query("UPDATE payment_transactions SET transaction_status='$transaction_status' WHERE transaction_id='$transaction_id'");
+            if ($this->db->error) {
+                $return = array(
+                    "status" => 'error',
+                    "message" => "update: ".$this->db->error
+                );
+                parent::withJson($return);
+                exit();
+            }
+
+            if ($transaction_status == 'settlement') {
+                // TODO set payment status in merchant's database to 'Settlement'
+                $msg = "Transaction order_id: " . $order_id ." successfully transfered using " . $type;
+            } else if ($transaction_status == 'pending') {
+                // TODO set payment status in merchant's database to 'Pending'
+                $msg = "Waiting customer to finish transaction order_id: " . $order_id . " using " . $type;
+            } else if ($transaction_status == 'deny') {
+                // TODO set payment status in merchant's database to 'Denied'
+                $msg = "Payment using " . $type . " for transaction order_id: " . $order_id . " is denied.";
+            } else if ($transaction_status == 'expire') {
+                // TODO set payment status in merchant's database to 'expire'
+                $msg =  "Payment using " . $type . " for transaction order_id: " . $order_id . " is expired.";
+            } else if ($transaction_status == 'cancel') {
+                // TODO set payment status in merchant's database to 'Denied'
+                $msg = "Payment using " . $type . " for transaction order_id: " . $order_id . " is canceled.";
+            }
+
+            $return = array(
+                "status" => "success",
+                "message" => $msg
+            );
+        }else {
+            $return = array(
+                "status" => "failed",
+                "message" => "transaction id not found"
+            );
+        }
+        parent::withJson($return);
+    }
+
     private function queryUpdateOrCreate($decoded) {
         $transaction_id = $decoded['midtrans']['transaction_id'];
         $va_number = $decoded['midtrans']['va_numbers'][0]['va_number'];
         $bank = $decoded['midtrans']['va_numbers'][0]['bank'];
 
-        $query= $this->db->query("SELECT transaction_id FROM payment_transactions WHERE transaction_id = '$transaction_id'");
+        $query = $this->db->query("SELECT transaction_id FROM payment_transactions WHERE transaction_id = '$transaction_id'");
 
         if ($query->num_rows > 0) {
             // sql update
