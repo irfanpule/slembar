@@ -82,7 +82,14 @@ class NotificationHandlerController extends Controller {
             }
 
             if ($transaction_status == 'settlement') {
-                // TODO set payment status in merchant's database to 'Settlement'
+                // Status ini menyatakan bahwa pembayaran sudah berhasil
+                // Ambil member_id dari table payment_transaction
+                $query = $this->db->query("SELECT transaction_id, member_id FROM payment_transactions WHERE transaction_id='$transaction_id'");
+                $obj = $query->fetch_object();
+                $memberID = $obj->member_id;
+
+                // update data denda member pada table fines
+                $this->db->query("UPDATE fines SET credit=debet WHERE member_id='$memberID'");
                 $msg = "Transaction order_id: " . $order_id ." successfully transfered using " . $type;
             } else if ($transaction_status == 'pending') {
                 // TODO set payment status in merchant's database to 'Pending'
