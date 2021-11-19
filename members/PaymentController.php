@@ -33,7 +33,6 @@ class PaymentController
         \Midtrans\Config::$serverKey = $this->paymentconf['midtrans_server_key'];
         // // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
         \Midtrans\Config::$isProduction = $this->paymentconf['midtrans_is_production']?true:false;
-        \Midtrans\Config::$overrideNotifUrl = SWB . "index.php?p=denda&status_fine=notification";
     }
     
     private function getMenu(){
