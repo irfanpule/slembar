@@ -4,6 +4,19 @@
 - Slembar terintegrasi dengan [Midtrans](https://midtrans.com/) sebagai payment gateway yang menyediakan banyak tipe pembayaran.
 - Slembar memanfaatkan fitur [SNAP Midtrans](https://snap-docs.midtrans.com/) 
 
+### Fitur
+- Member
+    - Melihat data denda
+    - Melihat data denda yang sudah dibayar (konvensional atau online)
+    - Melihat data transaksi
+    - Melihat detail transaksi
+    - Melakukan pembayaran denda secara online
+- Admin
+    - Mengubah Midtrans Configuration
+    - Melihat Transaction Fine
+- Mendapatkan notifikasi disetiap status transaksinya
+
+
 ### Instalasi
 - Unduh dan ekstrak
 - pindahkan pada directory `plugins`
