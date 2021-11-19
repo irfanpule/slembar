@@ -103,7 +103,6 @@ if (isset($_POST['updateData'])) {
     // write log
     utility::writeLogs($dbs, 'staff', $_SESSION['uid'], 'system', $_SESSION['realname'].' change Midtran configuration', 'Midtrans Config', 'Replace');
     utility::jsToastr(__('Midtrans Configuration'), __('Settings saved. Refreshing page'), 'success'); 
-    // echo '<script type="text/javascript">setTimeout(() => { top.location.href = \''.$_SERVER['REQUEST_URI'].'\' }, 2000);</script>';
     exit();
 }
 
