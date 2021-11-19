@@ -161,8 +161,11 @@ class PaymentController
             'phone'         => $obj->member_phone
         );
 
+        // enable payment_type by programmatically
+        $enable_payments = array('bank_transfer','gopay', 'shopeepay', 'indomaret');
         // Fill transaction details
         $transaction = array(
+            'enabled_payments' => $enable_payments,
             'transaction_details' => $transaction_details,
             'customer_details' => $customer_details,
             'item_details' => $items,
