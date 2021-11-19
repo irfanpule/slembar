@@ -8,7 +8,7 @@
 require SIMBIO . 'simbio_GUI/table/simbio_table.inc.php';
 require SIMBIO . 'simbio_DB/datagrid/simbio_dbgrid.inc.php';
 require SIMBIO . 'simbio_GUI/paging/simbio_paging.inc.php';
-require_once 'plugins/payments/midtrans-php-master/Midtrans.php';
+require_once 'plugins/slembar/midtrans-php-master/Midtrans.php';
 
 
 class PaymentController

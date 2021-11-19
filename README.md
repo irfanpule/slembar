@@ -32,7 +32,7 @@ require __DIR__ . '/controllers/ItemController.php';
 require __DIR__ . '/controllers/LoanController.php';
 
 /*----------  Require: baris ini yang tambahan  ----------*/
-require 'plugins/payments/api/NotificationHandlerController.php';
+require 'plugins/slembar/api/NotificationHandlerController.php';
 /*----------  Require: akhir bari  ----------*/
 ```
 - masih pada file `api/v1/routers.php`, tambahkan code tepat di atas `$router->run();`

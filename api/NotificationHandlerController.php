@@ -1,7 +1,7 @@
 <?php
 
 require_once 'api/v1/controllers/Controller.php';
-require 'plugins/payments/utils.php';
+require 'plugins/slembar/utils.php';
 
 
 class NotificationHandlerController extends Controller {
