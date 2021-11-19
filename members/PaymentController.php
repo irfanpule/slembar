@@ -178,7 +178,8 @@ class PaymentController
         catch (\Exception $e) {
             echo $e->getMessage();
         }
-        
+        $url = "?p=api/payment/save-transaction";
+
         $jsScript = <<<HTML
             <button id="pay-button" class="btn btn-primary btn-block"><i class="fas fa-sign-out-alt mr-2"></i>Bayar Sekarang</button>
             <pre><div id="result-json">JSON result will appear here after payment:<br></div></pre> 
@@ -195,15 +196,37 @@ class PaymentController
                     showSnap();
                 });
 
+                function saveTransaction(response) {
+                    respString = JSON.stringify(response, null, 2);
+                    body = '{"memberID": "{$this->memberID}", "midtrans":'+ respString +'}';
+                    console.log(body);
+                    $.ajax({
+                        type: 'POST',
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        url: '{$url}',
+                        data: body,
+                        success: function( data, textStatus, jQxhr ){
+                            console.log(data);
+                        },
+                        error: function( jqXhr, textStatus, errorThrown ){
+                            console.log( errorThrown );
+                        }
+                    })
+                }
+                
                 function showSnap() {
                     snap.pay('{$snap_token}', {
                         // Optional
                         onSuccess: function(result){
                             /* You may add your own js here, this is just example */ document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                            
                         },
                         // Optional
                         onPending: function(result){
                             /* You may add your own js here, this is just example */ document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                            console.log("state pending");
+                            saveTransaction(result);
                         },
                         // Optional
                         onError: function(result){
@@ -211,6 +234,7 @@ class PaymentController
                         }
                     });
                 }
+
             </script>
         HTML;
         return $table_view . $jsScript;
