@@ -287,11 +287,31 @@ class PaymentController
             $link = "";
         }
 
+        if ($data->transaction_status == 'settlement') {
+            $alert_class = "alert-success";
+            $msg = "Transaksi order_id: " . $data->order_id ." sukses ditransfer.";
+        } else if ($data->transaction_status == 'pending') {
+            $alert_class = "alert-primary";
+            $msg = "Ayo segera selesaikan transaksi order_id: " . $data->order_id . ". Panduan lebih lengkap bisa ikuti instruksi pada link di bawah ini.";
+        } else if ($data->transaction_status == 'deny') {
+            $alert_class = "alert-danger";
+            $msg = "Pembayaran untuk transaksi order_id: " . $data->order_id . " ditolak.";
+        } else if ($data->transaction_status == 'expire') {
+            $alert_class = "alert-warning";
+            $msg =  "Pembayaran untuk transaksi order_id: " . $data->order_id . " sudah berakhir.";
+        } else if ($data->transaction_status == 'cancel') {
+            $alert_class = "alert-danger";
+            $msg = "Pembayaran untuk transaksi order_id: " . $data->order_id . " dibatalkan.";
+        }
+        
         $view = <<<HTML
         
         $actions
         <div class="bg-white border-right border-bottom border-left p-4">
             <div class="tagline"><div class="memberInfoHead">Transaction Detail</div>
+        </div>
+        <div class="alert $alert_class" role="alert">
+            $msg
         </div>
         <table class="memberDetail table table-striped" cellspacing="0" cellpadding="5">
             <tbody>
