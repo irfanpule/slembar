@@ -85,7 +85,7 @@ class PaymentController
     }
 
     private function baseFinesUnpaid($num_recs_show = 20)
-    {
+    {   
         // table spec
         $table_spec = 'fines AS f';
 
@@ -116,13 +116,35 @@ class PaymentController
 
     public function showFinesUnpaid($num_recs_show = 20)
     {  
+        $query = $this->db->query("SELECT member_id FROM payment_transactions WHERE member_id='$this->memberID' AND transaction_status='pending'");
+        if ($query->num_rows > 0) {
+            $view = <<<HTML
+            <div class="alert alert-primary" role="alert">
+                Pembayaran denda dalam status pending, yuk lanjutkan transaksimu dan lihat petunjuk pembayaran pada halaman Transaction
+            </div>
+            HTML;
+            $actions = $this->getMenu();
+            return $actions.$view;
+        }
+
         $table_view .= $this->baseFinesUnpaid();
         $result .=  $table_view . '<a href="'. SWB .'index.php?p=denda&status_fine=paymentConfirm" class="btn btn-primary btn-block"><i class="fas fa-sign-out-alt mr-2"></i>Bayar Sekarang</a>';
         return $result;
     }
     
     public function paymentConfirm() 
-    {
+    {   
+        $query = $this->db->query("SELECT member_id FROM payment_transactions WHERE member_id='$this->memberID' AND transaction_status='pending'");
+        if ($query->num_rows > 0) {
+            $view = <<<HTML
+            <div class="alert alert-primary" role="alert">
+                Pembayaran denda dalam status pending, yuk lanjutkan transaksimu dan lihat petunjuk pembayaran pada halaman Transaction
+            </div>
+            HTML;
+            $actions = $this->getMenu();
+            return $actions.$view;
+        }
+
         $table_view = $this->baseFinesUnpaid();
         $query = $this->getFineData();
 
@@ -232,6 +254,8 @@ class PaymentController
                         onError: function(result){
                             /* You may add your own js here, this is just example */
                             console.log("state error");
+                            alert("Terjadi masalah, coba beberapa saat lagi");
+                            console.log(result);
                         }
                     });
                 }
@@ -338,8 +362,6 @@ class PaymentController
             </tbody>
         </table>
         HTML;
-
-
         return $view;
     }
 }
