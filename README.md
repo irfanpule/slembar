@@ -1,5 +1,5 @@
 ## Slembar
-- Slembar -> `SLiMS Plugin Untuk Embyar-Mbayar`.
+- Slembar -> `SLiMS Plugin Untuk Embyar-Mbayar`. Khusus untuk [SLiMS 9 Bulian](https://github.com/slims/slims9_bulian)
 - Slembar adalah plugin [SLiMS](https://slims.web.id/web/) untuk melakukan pembayaran denda secara online.
 - Slembar terintegrasi dengan [Midtrans](https://midtrans.com/) sebagai payment gateway yang menyediakan banyak tipe pembayaran.
 - Slembar memanfaatkan fitur [SNAP Midtrans](https://snap-docs.midtrans.com/) 
@@ -14,43 +14,99 @@
 - Admin
     - Mengubah Midtrans Configuration
     - Melihat Transaction Fine
-- Mendapatkan notifikasi disetiap status transaksinya
+    - Ubah biaya admin
+- Menerima notifikasi setiap perubahan status transaksi dari Midtrans
+- Mengirim notifikasi ke member setiap ada perubahan status transaksi
+- Tipe Pembayaran yang tersedia
+    - Bank Transfer
+        - BCA
+        - BNI
+        - BRI
+        - Mandiri
+        - Permata
+        - ATM Bersama
+    - Gopay
+    - Shopeepay
+    - Indomaret
+
+
+### Pra-instalasi
+- Sebelum menggunakan plugin ini, kita harus memiliki akun Midtrans, karena plugin ini harus diintegrasikan dengan payment gatewar Midtrans.
+- Lakukan registrasi seperti biasa, ikuti arahan yang diberikan dari sistem midtrans.
+- Lengkapi semua form seperti menjelaskan pembayaran nantinya digunakan untuk apa, data diri, informasi rek bank dll.
+- Proses melengkapi data berpengaruh pada sistem Midtrans untuk menyiapkan payment type untuk digunakan saat development atau production
 
 
 ### Instalasi
 - Unduh dan ekstrak
-- pindahkan pada directory `plugins`
-- cari file `api/v1/routers.php`, tambahkan beberapa baris code ini pada file tsb tepak pada `require` yang terakhir
-```php
-/*----------  Require dependencies  ----------*/
-require 'lib/router.inc.php';
-require __DIR__ . '/controllers/HomeController.php';
-require __DIR__ . '/controllers/BiblioController.php';
-require __DIR__ . '/controllers/MemberController.php';
-require __DIR__ . '/controllers/SubjectController.php';
-require __DIR__ . '/controllers/ItemController.php';
-require __DIR__ . '/controllers/LoanController.php';
+- Pindahkan pada directory `plugins`
+- Masuk ke halaman admin, masuk menu `System` -> `Plugins`. Lihat apakah plugin `Slembar` muncul.
+- Jika sudah maka aktifkan plugin dengan ubah switch button ke posisi aktif/enable.
+- Lalu cari file `api/v1/routers.php`, tambahkan kode ini 
+  ```php
+  require 'plugins/slembar/api/NotificationHandlerController.php';
+  ``` 
+  pada file tsb tepat pada `require` yang terakhir. Contoh seperti di bawah ini.
 
-/*----------  Require: baris ini yang tambahan  ----------*/
-require 'plugins/slembar/api/NotificationHandlerController.php';
-/*----------  Require: akhir bari  ----------*/
-```
-- masih pada file `api/v1/routers.php`, tambahkan code tepat di atas `$router->run();`
-```php
-.....
-$router->map('GET', '/loan/summary/[*:date]', 'LoanController@getSummaryDate');
+  ```php
+  /*----------  Require dependencies  ----------*/
+  require 'lib/router.inc.php';
+  require __DIR__ . '/controllers/HomeController.php';
+  require __DIR__ . '/controllers/BiblioController.php';
+  require __DIR__ . '/controllers/MemberController.php';
+  require __DIR__ . '/controllers/SubjectController.php';
+  require __DIR__ . '/controllers/ItemController.php';
+  require __DIR__ . '/controllers/LoanController.php';
 
-/*----------  Router: baris tambahan yang ini  ----------*/
-$router->map('GET', '/payment/test', 'NotificationHandlerController@paymentTest');
-$router->map('POST', '/payment/save-transaction', 'NotificationHandlerController@saveTransaction');
-/*----------  Router: akhir baris  ----------*/
+  /*----------  Require: baris ini yang tambahan  ----------*/
+  require 'plugins/slembar/api/NotificationHandlerController.php';
+  /*----------  Require: akhir bari  ----------*/
+  ```
+- masih pada file `api/v1/routers.php`, tambahkan kode ini
+  ```php
+  $router->map('GET', '/payment/test', 'NotificationHandlerController@paymentTest');
+  $router->map('POST', '/payment/save-transaction', 'NotificationHandlerController@saveTransaction');
+  ```
+  tepat di atas `$router->run();`. Contoh seperti di bawah ini.
 
-/*----------  Run matching route  ----------*/
-$router->run();
+  ```php
+  .....
+  $router->map('GET', '/loan/summary/[*:date]', 'LoanController@getSummaryDate');
 
-// doesn't need template
-exit();
-```
+  /*----------  Router: baris tambahan yang ini  ----------*/
+  $router->map('GET', '/payment/test', 'NotificationHandlerController@paymentTest');
+  $router->map('POST', '/payment/save-transaction', 'NotificationHandlerController@saveTransaction');
+  /*----------  Router: akhir baris  ----------*/
 
-### Simulasi Pembayaran Midtrans
-Midtrans memiliki silulasi pembayaran yang dapat digunakan saat proses development atau testing. Dokumentasinya dapat dilihat [sini](https://snap-docs.midtrans.com/#testing-credentials)
+  /*----------  Run matching route  ----------*/
+  $router->run();
+
+  // doesn't need template
+  exit();
+  ```
+- Siap digunakan.
+
+
+### Konfigurasi SLiMS dan Midtrans
+- Konfigurasi SLiMS
+    - Setelah instalasi ada yang harus dikonfigurasi terlebih dahulu, caranya masuk sebagai admin lalu pilih menu `System` -> `Midtrans Config`
+    - Pada halaman `Midtrans Config` diharusnya mengisi
+        - `Midtrans Server Key`
+        - `Midtrans Client Key`
+        - `Environment Production`
+        - `Admin Fee`
+    - Setelah itu simpan konfigurasi
+- Konfigurasi Midtrans
+    - Masuk ke Midtrans
+    - Pilih environtment `sandbox` (development) atau `production` (production), lalu pilih menu `Pengaturan` -> `Konfigurasi`
+    - Disana terdapat `Pengaturan URL Redirect`, tambahkan url pada `Payment Notification URL` dengan url dibawah ini
+      ```
+      https://{host_name}/index.php?p=api/payment/listen-notification
+      ```
+      `host_name` disesuaikan dengan domain masing-masing ya. Untuk kasus development bisa menggunakan [ngrok](https://ngrok.com/) sebagai forwading agar tetap bisa menerima notifikasi realtime dari Midtrans
+- Plugin benar-benar siap digunakan.
+
+### Development Tips
+- Seperti yang dijelaskan di bab Konfigurasi bahwa untuk mendapatkan notifikasi realtime dari Midtrans saat development kita perlu mendaftarkan url webhook ke midtrans. Nah yang didaftarkan harus alamat yang valid, tidak bisa localhost.
+- Jadi sebelum diupload ke cpanel / vps, kita bisa menggunakan `Ngrok` sebagai forwading yang host-nya bisa kita gunakan.
+- Midtrans memiliki silulasi pembayaran yang dapat digunakan saat proses development atau testing. Dokumentasinya dapat dilihat [sini](https://snap-docs.midtrans.com/#testing-credentials)
