@@ -1,5 +1,5 @@
 ## Slembar
-- Slembar -> `SLiMS Plugin Untuk Mbyar-mbayar`.
+- Slembar -> `SLiMS Plugin Untuk Embyar-Mbayar`.
 - Slembar adalah plugin [SLiMS](https://slims.web.id/web/) untuk melakukan pembayaran denda secara online.
 - Slembar terintegrasi dengan [Midtrans](https://midtrans.com/) sebagai payment gateway yang menyediakan banyak tipe pembayaran.
 - Slembar memanfaatkan fitur [SNAP Midtrans](https://snap-docs.midtrans.com/) 
