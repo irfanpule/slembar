@@ -1,0 +1,12 @@
+{
+    "status_code": "201",
+    "status_message": "Success, transaction is found",
+    "transaction_id": "b497e8bc-12d7-4b00-ae5b-d8751c108d36",
+    "order_id": "2075082171",
+    "gross_amount": "18000.00",
+    "payment_type": "qris",
+    "transaction_time": "2021-11-19 10:44:49",
+    "transaction_status": "pending",
+    "fraud_status": "accept",
+    "finish_redirect_url": "http://example.com?order_id=2075082171&status_code=201&transaction_status=pending"
+}

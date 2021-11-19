@@ -1,0 +1,13 @@
+{
+    "status_code": "201",
+    "status_message": "Transaksi sedang diproses",
+    "transaction_id": "6f6d220d-1249-42ef-8811-5112d98496c9",
+    "order_id": "1834538212",
+    "gross_amount": "18000.00",
+    "payment_type": "cstore",
+    "transaction_time": "2021-11-19 10:48:12",
+    "transaction_status": "pending",
+    "payment_code": "858978950954",
+    "pdf_url": "https://app.sandbox.midtrans.com/snap/v1/transactions/47fe7e5b-870e-430e-813f-e8049f5aa7c7/pdf",
+    "finish_redirect_url": "http://example.com?order_id=1834538212&status_code=201&transaction_status=pending"
+}
