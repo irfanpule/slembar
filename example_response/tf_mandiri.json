@@ -1,0 +1,15 @@
+{
+    "status_code": "201",
+    "status_message": "Transaksi sedang diproses",
+    "transaction_id": "c3d3c6dc-0948-4925-b91d-f706e89884a5",
+    "order_id": "79627554",
+    "gross_amount": "18000.00",
+    "payment_type": "echannel",
+    "transaction_time": "2021-11-19 14:27:17",
+    "transaction_status": "pending",
+    "fraud_status": "accept",
+    "bill_key": "619477007802",
+    "biller_code": "70012",
+    "pdf_url": "https://app.sandbox.midtrans.com/snap/v1/transactions/8c0f6516-3635-4583-9875-aba1d8e013d7/pdf",
+    "finish_redirect_url": "http://example.com?order_id=79627554&status_code=201&transaction_status=pending"
+}
