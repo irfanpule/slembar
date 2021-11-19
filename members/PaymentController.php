@@ -127,8 +127,14 @@ class PaymentController
             return $actions.$view;
         }
 
-        $table_view .= $this->baseFinesUnpaid();
-        $result .=  $table_view . '<a href="'. SWB .'index.php?p=denda&status_fine=paymentConfirm" class="btn btn-primary btn-block"><i class="fas fa-sign-out-alt mr-2"></i>Bayar Sekarang</a>';
+        $button = '';
+        $query = $this->db->query("SELECT fines_id FROM fines WHERE member_id='$this->memberID' AND (debet!=credit)");
+        if ($query->num_rows > 0) {
+            $button = '<a href="'. SWB .'index.php?p=denda&status_fine=paymentConfirm" class="btn btn-primary btn-block"><i class="fas fa-sign-out-alt mr-2"></i>Bayar Sekarang</a>';
+        }
+
+        $table_view = $this->baseFinesUnpaid();
+        $result .=  $table_view . $button;
         return $result;
     }
     
@@ -143,6 +149,18 @@ class PaymentController
             HTML;
             $actions = $this->getMenu();
             return $actions.$view;
+        }
+
+        $button = '';
+        $query = $this->db->query("SELECT fines_id FROM fines WHERE member_id='$this->memberID' AND (debet!=credit)");
+        if ($query->num_rows == 0) {
+            $alert = <<<HTML
+            <div class="alert alert-warning" role="alert">
+                Tidak ada denda untuk dibayarkan. Silahkan pinjam buku dan lakukan pengembalian tidak tepat waktu. Hiii
+            </div>
+            HTML;
+            $actions = $this->getMenu();
+            return $actions.$alert;
         }
 
         $table_view = $this->baseFinesUnpaid();
