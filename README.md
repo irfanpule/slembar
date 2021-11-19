@@ -1,11 +1,8 @@
-## Payments Midtrans
-Plugin payment gateway Midtrans yang memiliki banyak metode pembayaran.
-
-### Midtrans
-Website: https://midtrans.com/
-Dokumentasi snap: https://snap-docs.midtrans.com/
-Silulasi pembayaran: https://snap-docs.midtrans.com/#testing-credentials
-
+## Slembar
+- Slembar -> `SLiMS Plugin Untuk Mbyar-mbayar`.
+- Slembar adalah plugin [SLiMS](https://slims.web.id/web/) untuk melakukan pembayaran denda secara online.
+- Slembar terintegrasi dengan [Midtrans](https://midtrans.com/) sebagai payment gateway yang menyediakan banyak tipe pembayaran.
+- Slembar memanfaatkan fitur [SNAP Midtrans](https://snap-docs.midtrans.com/) 
 
 ### Instalasi
 - Unduh dan ekstrak
@@ -41,3 +38,6 @@ $router->run();
 // doesn't need template
 exit();
 ```
+
+### Simulasi Pembayaran Midtrans
+Midtrans memiliki silulasi pembayaran yang dapat digunakan saat proses development atau testing. Dokumentasinya dapat dilihat [sini](https://snap-docs.midtrans.com/#testing-credentials)
