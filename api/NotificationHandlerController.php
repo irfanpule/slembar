@@ -1,6 +1,7 @@
 <?php
 
 require_once 'api/v1/controllers/Controller.php';
+require 'plugins/payments/utils.php';
 
 
 class NotificationHandlerController extends Controller {
@@ -46,6 +47,7 @@ class NotificationHandlerController extends Controller {
                 "status" => 'success',
                 "message" => 'Berhasil simpan data transaksi'
             );
+            utility::writeLogs($this->db, 'payment_transactions', $decoded['midtrans']['transaction_id'], 'slembar', $msg, 'save transcation');
         }
         parent::withJson($return);
     }
@@ -104,6 +106,10 @@ class NotificationHandlerController extends Controller {
                 // TODO set payment status in merchant's database to 'Denied'
                 $msg = "Payment using " . $type . " for transaction order_id: " . $order_id . " is canceled.";
             }
+            
+            // send email notification
+            sendNotificationEmail($memberID, $msg, $transaction_id);
+            utility::writeLogs($this->db, 'payment_transactions', $memberID, 'slembar', $msg, 'update status');
 
             $return = array(
                 "status" => "success",
