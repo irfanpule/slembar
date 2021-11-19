@@ -1,6 +1,6 @@
 <?php
 /**
- * @Created by          : Waris Agung Widodo (ido.alit@gmail.com)
+ * @Created by          : Muhammad Irfan (irfan.pule2@gmail.com)
  * @Date                : 17/11/2021 16:40
  * @File name           : 1_CreateTransactionTable.php
  *
