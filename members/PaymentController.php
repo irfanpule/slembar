@@ -182,7 +182,6 @@ class PaymentController
 
         $jsScript = <<<HTML
             <button id="pay-button" class="btn btn-primary btn-block"><i class="fas fa-sign-out-alt mr-2"></i>Bayar Sekarang</button>
-            <pre><div id="result-json">JSON result will appear here after payment:<br></div></pre> 
 
             <!-- TODO: Remove ".sandbox" from script src URL for production environment. Also input your client key in "data-client-key" -->
             <script src="{$this->paymentconf['midtrans_url']}" data-client-key="{$this->paymentconf['midtrans_client_key']}"></script>
@@ -208,6 +207,7 @@ class PaymentController
                         data: body,
                         success: function( data, textStatus, jQxhr ){
                             console.log(data);
+                            window.location.href = "index.php?p=denda&status_fine=trxDetail&trxId=" + response.transaction_id;
                         },
                         error: function( jqXhr, textStatus, errorThrown ){
                             console.log( errorThrown );
@@ -219,18 +219,19 @@ class PaymentController
                     snap.pay('{$snap_token}', {
                         // Optional
                         onSuccess: function(result){
-                            /* You may add your own js here, this is just example */ document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
-                            
+                            /* You may add your own js here, this is just example */
+                            console.log("state success");
                         },
                         // Optional
                         onPending: function(result){
-                            /* You may add your own js here, this is just example */ document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                            /* You may add your own js here, this is just example */
                             console.log("state pending");
                             saveTransaction(result);
                         },
                         // Optional
                         onError: function(result){
-                            /* You may add your own js here, this is just example */ document.getElementById('result-json').innerHTML += JSON.stringify(result, null, 2);
+                            /* You may add your own js here, this is just example */
+                            console.log("state error");
                         }
                     });
                 }
