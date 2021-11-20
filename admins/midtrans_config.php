@@ -126,7 +126,7 @@ $form->addTextField('text', 'midtrans_client_key', __('Midtrans Server Key'), $s
 $options = null;
 $options[] = array('0', __('False'));
 $options[] = array('1', __('True'));
-$form->addSelectList('midtrans_is_production', __('Environment Production'), $options, $sysconf['midtrans_is_production']?$sysconf['midtrans_is_production']:'1','class="form-control col-3"');
+$form->addSelectList('midtrans_is_production', __('Environment Production'), $options, $sysconf['midtrans_is_production']?$sysconf['midtrans_is_production']:'0','class="form-control col-3"');
 
 $form->addTextField('text', 'payment_admin_fee', __('Admin Fee'), $sysconf['payment_admin_fee']?$sysconf['payment_admin_fee']:'2000', 'class="form-control" style="width: 10%;"');
 
