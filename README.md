@@ -4,6 +4,8 @@
 - Slembar terintegrasi dengan [Midtrans](https://midtrans.com/) sebagai payment gateway yang menyediakan banyak tipe pembayaran.
 - Slembar memanfaatkan fitur [SNAP Midtrans](https://snap-docs.midtrans.com/) 
 
+  ![image](https://drive.google.com/uc?export=view&id=1_iygQeIBGNb_0VMH_XbmtS_kgtauyiWW)
+
 ### Fitur
 - Member
     - Melihat data denda
@@ -38,7 +40,7 @@
 
 
 ### Instalasi
-- Unduh dan ekstrak
+- Unduh dan ekstrak, pastikan folder hasil ekstrak adalah `slembar`, jika bukan silahkan rename terlebih dahulu.
 - Pindahkan pada directory `plugins`
 - Masuk ke halaman admin, masuk menu `System` -> `Plugins`. Lihat apakah plugin `Slembar` muncul.
 - Jika sudah maka aktifkan plugin dengan ubah switch button ke posisi aktif/enable.
