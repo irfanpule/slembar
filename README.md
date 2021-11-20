@@ -98,6 +98,7 @@
         - `Environment Production`
         - `Admin Fee`
     - Setelah itu simpan konfigurasi
+    ![image](https://drive.google.com/uc?export=view&id=1BZJZGaCYXFmQCvtaDMwvsBx4iqSl2gbR)
 - Konfigurasi Midtrans
     - Masuk ke Midtrans
     - Pilih environtment `sandbox` (development) atau `production` (production), lalu pilih menu `Pengaturan` -> `Konfigurasi`
@@ -106,9 +107,15 @@
       https://{host_name}/index.php?p=api/payment/listen-notification
       ```
       `host_name` disesuaikan dengan domain masing-masing ya. Untuk kasus development bisa menggunakan [ngrok](https://ngrok.com/) sebagai forwading agar tetap bisa menerima notifikasi realtime dari Midtrans
+      ![image](https://drive.google.com/uc?export=view&id=10fdxT1P7uOpULEVbCxFCoOSONWm9UIgi)
 - Plugin benar-benar siap digunakan.
 
 ### Development Tips
 - Seperti yang dijelaskan di bab Konfigurasi bahwa untuk mendapatkan notifikasi realtime dari Midtrans saat development kita perlu mendaftarkan url webhook ke midtrans. Nah yang didaftarkan harus alamat yang valid, tidak bisa localhost.
 - Jadi sebelum diupload ke cpanel / vps, kita bisa menggunakan `Ngrok` sebagai forwading yang host-nya bisa kita gunakan.
 - Midtrans memiliki silulasi pembayaran yang dapat digunakan saat proses development atau testing. Dokumentasinya dapat dilihat [sini](https://snap-docs.midtrans.com/#testing-credentials)
+
+
+### Screenshot & Video
+- Untuk melihat beberapa hasil tangkapan layar bisa akses [disini](https://drive.google.com/drive/folders/1mdQJSlOeYU31YW2_5v0jtDPlEIVTlAOs)
+- Untuk melihat video demo bisa akses [disini](https://drive.google.com/file/d/1F11Rt70mEC1PnbdtHRX4YswD37W5Mtd6/view?usp=sharing)
