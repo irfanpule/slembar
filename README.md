@@ -74,8 +74,8 @@
   $router->map('GET', '/loan/summary/[*:date]', 'LoanController@getSummaryDate');
 
   /*----------  Router: baris tambahan yang ini  ----------*/
-  $router->map('GET', '/payment/test', 'NotificationHandlerController@paymentTest');
   $router->map('POST', '/payment/save-transaction', 'NotificationHandlerController@saveTransaction');
+  $router->map('POST', '/payment/listen-notification', 'NotificationHandlerController@listenNotification');
   /*----------  Router: akhir baris  ----------*/
 
   /*----------  Run matching route  ----------*/
